@@ -1,0 +1,14 @@
+<nav>
+    <a href="{% url 'knowledge_base:hub' %}" class="nav-item">Hub</a>
+    <a href="{% url 'accounts:login' %}" class="nav-item">Login</a>
+    <a href="{% url 'accounts:sign-up' %}" class="nav-item">Sigh Up</a>
+    <a href="{% url 'accounts:user-profile' %}" class="nav-item">
+        My account {% if user.is_authenticated %}({{ user.username }}){% endif %}
+    </a>
+
+    <form action="/search/" method="GET">
+        <input type="text" name="q" value="{% if not tag_search %}{{ query }}{% endif %}"
+            placeholder="Search..." minlength="3" required>
+        <button type="submit">Search</button>
+    </form>
+</nav>

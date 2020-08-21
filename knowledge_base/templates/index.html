@@ -1,0 +1,9 @@
+{% extends 'base.html' %}
+
+{% block title %}Hub{% endblock %}
+
+{% block content %}
+<h1>Hub | My Knowledge Base</h1>
+<a href="{% url 'categories:create-category' %}">Create category</a>
+{% include 'categories.html' %}
+{% endblock %}

@@ -1,0 +1,33 @@
+<ul class="categories-list">
+    {% for category in categories %}
+        {% with category.category_data as category_object %}
+        <li class="category">
+            <h3 class="category-name">
+                <a href="{% url 'categories:category-detail' slug=category_object.slug %}">
+                    {{ category_object.name }}
+                </a>
+            </h3>
+
+            {% if not sidebar %}
+                <p class="category-description">{{ category_object.description }}</p>
+            {% endif %}
+
+            <ul class="recent-pages">
+                {% for page in category.recent_pages %}
+                    <li class="recent-page">
+                        <a href="{% url 'pages:page-detail' slug=page.slug %}">
+                            {{ page.title }}
+                        </a>
+                    </li>
+                {% endfor %}
+            </ul>
+
+            {% if category.overflow %}
+                <a href="{% url 'categories:category-detail' slug=category_object.slug %}">
+                    More pages ({{ category.overflow_size }})
+                </a>
+            {% endif %}
+            </li>
+        {% endwith %}
+    {% endfor %}
+</ul>

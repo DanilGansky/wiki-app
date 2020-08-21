@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+
+{% block title %}"{{ query }}" | Search{% endblock %}
+
+{% block content %}
+{% if not results %}
+    <h3>Nothing found</h3>
+{% endif %}
+
+{% for page in results %}
+    <div>
+        {% if page.author != user %}
+            <h1>
+                <a href="{% url 'pages:shared-page' username=page.author slug=page.slug %}">
+                    {{ page.title }}
+                </a>
+            </h1>
+            <span style="color: red;">Shared</span>
+        {% else %}
+            <h1>
+                <a href="{% url 'pages:page-detail' slug=page.slug %}">
+                    {{ page.title }}
+                </a>
+            </h1>
+        {% endif %}
+
+        <p>{{ page.description }}</p>
+        <p>{{ page.category }}</p>
+    </div>
+{% endfor %}
+{% endblock %}

@@ -1,0 +1,34 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}{% endblock %} | My Knowledge Base</title>
+
+    <!--JavaScript libs-->
+    <script src="{% static 'js/showdown.min.js' %}"></script>
+</head>
+<body>
+    {% include 'nav.html' %}
+
+    {% if user.is_authenticated %}
+        {% include 'sidebar.html' with sidebar=True %}
+    {% endif %}
+    
+    {% include 'messages.html' %}
+    <br>
+
+    {% block content %}
+    {% endblock %}
+
+    <script src="{% static 'js/html_preview.js' %}"></script>
+    <script>
+        let markdown_field = document.querySelector('#id_content_markup');
+        let html_preview_field = document.createElement('div');
+        markdown_field.parentNode.insertBefore(html_preview_field,
+                                               markdown_field.nextSibling);
+        html_preview(markdown_field, html_preview_field);
+    </script>
+</body>
+</html>

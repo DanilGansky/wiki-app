@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ page.title }} | Pages{% endblock %}
+
+{% block content %}
+{% if page.background_image %}
+    <img class="page-background-image" width="600" src="{{ page.background_image.url }}" alt="{{ page.title }}">
+{% endif %}
+
+<h1>{{ page.title }} | My Knowledge Base</h1>
+<p class="page-description">{{ page.description }}</p>
+
+{% if page.author == user %}
+    <a href="{% url 'pages:delete-page' slug=page.slug %}">Delete this page</a>
+    <a href="{% url 'pages:update-page' slug=page.slug %}">Update this page</a>
+{% endif %}
+
+<div class="page-details">
+    <span class="page-author">{{ page.author.username }}</span>
+    <span class="page-is-shared">
+        {% if page.is_shared %}
+            Public
+        {% else %}
+            Private
+        {% endif %}
+    </span>
+
+    {% if page.author == user %}
+        <a href="{% url 'categories:category-detail' slug=page.category.slug %}">
+            {{ page.category.name }}
+        </a>
+    {% else %}
+        <span>{{ page.category.name }}</span>
+    {% endif %}
+</div>
+
+<p class="page-content">{{ page.content_markup_html | safe }}</p>
+
+<ul class="page-tags">
+    {% for tag in page.tags %}
+        <li><a href="{% url 'search:tag-search' tag=tag %}">{{ tag }}</a></li>
+    {% endfor %}
+</ul>
+
+<span class="page-date">{{ page.date_create }}</span>
+<span class="page-date">{{ page.date_update }}</span>
+{% endblock %}
