@@ -10,7 +10,7 @@
 <h1>{{ category.name }}</h1>
 
 {% if category.author == user %}
-    <a href="{% url 'pages:create-page' %}">Create page</a>
+    <a href="{% url 'pages:create-page' %}?category={{ category.slug }}">Create page</a>
     <a href="{% url 'categories:delete-category' slug=category.slug %}">Delete this category</a>
     <a href="{% url 'categories:update-category' slug=category.slug %}">Update this category</a>
 {% endif %}

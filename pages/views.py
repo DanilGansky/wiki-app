@@ -1,11 +1,13 @@
 from django.conf import settings
 from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.shortcuts import get_object_or_404
 from django.urls import reverse_lazy
 from django.utils.translation import gettext as _
 from django.views.generic import DetailView
 from django.views.generic.edit import CreateView, DeleteView, UpdateView
 
+from categories.models import Category
 from decorators import extend_context, filter_queryset_by_current_user
 
 from .forms import PageForm
@@ -45,7 +47,15 @@ class CreatePageView(BasePageEditView, CreateView):
 
     def get_form_kwargs(self):
         kwargs = super(CreatePageView, self).get_form_kwargs()
-        kwargs['instance'] = self.model(author=self.request.user)
+        instance = self.model(author=self.request.user)
+        category_slug = self.request.GET.get('category')
+
+        if category_slug is not None:
+            instance.category = get_object_or_404(Category,
+                                                  author=self.request.user,
+                                                  slug=category_slug)
+
+        kwargs['instance'] = instance
         return kwargs
 
 
