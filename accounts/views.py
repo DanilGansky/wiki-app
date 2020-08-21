@@ -10,7 +10,7 @@ from django.views.generic.edit import DeleteView, UpdateView
 
 from decorators import custom_get_object_for_user, extend_context
 
-from .forms import LoginForm, SignUpForm, UpdateUserForm
+from .forms import ChangePasswordForm, LoginForm, SignUpForm, UpdateUserForm
 from .models import User
 from .services import InvalidCredentials, create_user, get_user
 
@@ -42,6 +42,14 @@ class UpdateUserView(BaseUserView, UpdateView):
     title = _('Edit profile')
     template_name = 'form.html'
     form_class = UpdateUserForm
+
+
+@extend_context
+@custom_get_object_for_user
+class ChangePasswordView(BaseUserView, UpdateView):
+    title = _('Change password')
+    template_name = 'form.html'
+    form_class = ChangePasswordForm
 
 
 @extend_context

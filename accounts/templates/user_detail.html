@@ -11,6 +11,7 @@
 <a href="{% url 'accounts:login' %}">Log out</a>
 <a href="{% url 'accounts:update-profile' %}">Update profile</a>
 <a href="{% url 'accounts:delete-profile' %}">Delete profile</a>
+<a href="{% url 'accounts:change-password' %}">Change password</a>
 
 <h3>Superuser: {{ user.is_superuser }}</h3>
 <h3>Staff: {{ user.is_staff }}</h3>
