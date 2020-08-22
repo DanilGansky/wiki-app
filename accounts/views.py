@@ -74,7 +74,8 @@ class LoginView(BaseAuthView):
             user = get_user(request.POST.get('username'),
                             request.POST.get('password'))
         except InvalidCredentials:
-            messages.error(request, _('Invalid username or password'))
+            messages.error(request, _('Invalid credentials'),
+                           extra_tags='danger')
             return render(request, self.template, {'form': self.form,
                                                    'title': self.title})
         else:
@@ -93,7 +94,8 @@ class SignUpView(BaseAuthView):
         try:
             create_user(form)
         except InvalidCredentials:
-            messages.error(request, _('Invalid credentials'))
+            messages.error(request, _('Invalid credentials'),
+                           extra_tags='danger')
             return render(request, self.template, {'form': form,
                                                    'title': self.title})
         else:
