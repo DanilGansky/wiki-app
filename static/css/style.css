@@ -1,0 +1,30 @@
+/* FORMS */
+ul.errorlist {
+    margin-bottom: 0 !important;
+    padding-left: 0;
+    list-style: none;
+}
+
+.file-input {
+    height: initial;
+}
+
+/* SIDEBAR */
+@media (max-width: 992px) {
+    .sidebar {
+        display: none;
+    }
+}
+
+/* CONTENT */
+.page-background {
+    overflow: hidden !important;
+}
+
+.page-background img {
+    object-fit: cover;
+}
+
+.badge {
+    margin-bottom: 5px;
+}

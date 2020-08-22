@@ -1,18 +1,51 @@
 {% extends 'base.html' %}
+{% load static %}
+{% load widget_tweaks %}
 
 {% block title %}{{ title }}{% endblock %}
 
 {% block content %}
 <h1>{{ title }}</h1>
-<form method="post" enctype="multipart/form-data">
+<hr>
+
+<form class="form" method="post" enctype="multipart/form-data">
     {% csrf_token %}
     {% for field in form.visible_fields %}
-        <div>
-            {{ field.errors }}
+        <div class="form-group">
+            {% if field.errors %}
+                {% for error in field.errors %}
+                    <div class="alert alert-danger">{{ field.errors }}</div>
+                {% endfor %}
+            {% endif %}
+
             {{ field.label_tag }}
-            {{ field }}
+
+            {% with field.field.widget.input_type as field_type %}
+                {% if field_type == 'file' %}
+                    {% render_field field class="form-control file-input" %}
+                {% elif field_type == 'checkbox' %}
+                    {% render_field field %}
+                {% else %}
+                    {% render_field field class="form-control" %}
+                {% endif %}
+            {% endwith %}
         </div>
     {% endfor %}
-    <button type="submit">Submit</button>
+    <button class="btn btn-outline-primary" type="submit">Submit</button>
 </form>
+{% endblock %}
+
+{% block scripts %}
+<script src="{% static 'js/showdown.min.js' %}"></script>
+<script src="{% static 'js/html_preview.js' %}"></script>
+<script>
+    let markdown_field = document.querySelector('#id_content_markup');
+
+    if (markdown_field) {
+        let html_preview_field = document.createElement('div');
+        markdown_field.parentNode.insertBefore(html_preview_field,
+                                               markdown_field.nextSibling);
+        html_preview(markdown_field, html_preview_field);
+    }
+</script>
 {% endblock %}

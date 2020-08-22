@@ -1,0 +1,41 @@
+{% load filters %}
+<ul class="list-group">
+    {% if not pages %}
+        <li class="list-group-item">Empty page list</li>
+    {% endif %}
+
+    {% for page in pages %}
+        <a class="list-group-item list-group-item-action {% if search and page.author != user %}list-group-item-info{% endif %}" 
+            {% if search and page.author != user %}
+                href="{% url 'pages:shared-page' username=page.author slug=page.slug %}"
+            {% else %}
+                href="{% url 'pages:page-detail' slug=page.slug %}"
+            {% endif %}>
+            <div class="d-flex w-100 justify-content-between">
+                <h5 class="mb-1">{{ page.title }}</h5>
+                <small>{{ page.date_update | prettify_date }}</small>
+            </div>
+
+            {% if page.description %}
+                <p class="mb-1">{{ page.description }}</p>
+            {% endif %}
+
+            {% if not sidebar %}
+                {% if search %}
+                    <small>{{ page.author }}</small>
+                {% endif %}
+
+                <small>{{ page.date_create }}</small>
+                <small>{{ page.is_shared | prettify_shared_status }}</small>
+                        
+                {% if page.tags %}
+                    <ul class="list-group list-group-horizontal mt-1">
+                        {% for tag in page.tags %}
+                            <li class="list-group-item">{{ tag }}</li>
+                        {% endfor %}
+                    </ul>
+                {% endif %}
+            {% endif %}
+        </a>
+    {% endfor %}
+</ul>

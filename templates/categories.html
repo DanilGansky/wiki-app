@@ -1,33 +1,32 @@
-<ul class="categories-list">
+{% load filters %}
+<ul class="pl-0 list-group">
+    {% if not categories and sidebar %}
+        <li class="list-group-item">Empty category list</li>
+    {% endif %}
+
     {% for category in categories %}
         {% with category.category_data as category_object %}
-        <li class="category">
-            <h3 class="category-name">
-                <a href="{% url 'categories:category-detail' slug=category_object.slug %}">
+        <li class="list-group-item">
+            <h5 class="mt-0">
+                <a class="text-body mr-1" href="{% url 'categories:category-detail' slug=category_object.slug %}">
                     {{ category_object.name }}
                 </a>
-            </h3>
+
+                {% if category.overflow %}
+                    <a href="{% url 'categories:category-detail' slug=category_object.slug %}" class="badge badge-light">
+                        <span>More pages</span>
+                        <span class="badge badge-primary">{{ category.overflow_size }}</span>
+                    </a>
+                {% endif %}
+            </h5>
+            <hr>
 
             {% if not sidebar %}
-                <p class="category-description">{{ category_object.description }}</p>
+                <p class="text-muted">{{ category_object.description }}</p>
             {% endif %}
 
-            <ul class="recent-pages">
-                {% for page in category.recent_pages %}
-                    <li class="recent-page">
-                        <a href="{% url 'pages:page-detail' slug=page.slug %}">
-                            {{ page.title }}
-                        </a>
-                    </li>
-                {% endfor %}
-            </ul>
-
-            {% if category.overflow %}
-                <a href="{% url 'categories:category-detail' slug=category_object.slug %}">
-                    More pages ({{ category.overflow_size }})
-                </a>
-            {% endif %}
-            </li>
+            {% include 'pages.html' with pages=category.recent_pages %}
+        </li>
         {% endwith %}
     {% endfor %}
 </ul>

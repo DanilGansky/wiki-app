@@ -4,17 +4,30 @@
 
 {% block content %}
 {% if user.profile_photo %}
-    <img src="{{ user.profile_photo.url }}" width="200" alt="{{ user.username }}">
+    <img class="rounded mb-2" src="{{ user.profile_photo.url }}" width="200" alt="{{ user.username }}">
 {% endif %}
-    
-<h1>{{ user.username }}</h1>
-<a href="{% url 'accounts:login' %}">Log out</a>
-<a href="{% url 'accounts:update-profile' %}">Update profile</a>
-<a href="{% url 'accounts:delete-profile' %}">Delete profile</a>
-<a href="{% url 'accounts:change-password' %}">Change password</a>
 
-<h3>Superuser: {{ user.is_superuser }}</h3>
-<h3>Staff: {{ user.is_staff }}</h3>
+<div class="d-flex align-items-center">
+    <h2>{{ user.username }}</h2>
+
+    {% if user.is_superuser and user.is_staff %}
+        <div class="badge badge-success ml-1">admin</div>
+    {% endif %}
+</div>
+
+<h5>
+    <a class="badge badge-warning" href="{% url 'accounts:login' %}">Log out</a>
+    <a class="badge badge-primary" href="{% url 'accounts:update-profile' %}">Update profile</a>
+    <a class="badge badge-primary" href="{% url 'accounts:change-password' %}">Change password</a>
+    <a class="badge badge-danger" href="{% url 'accounts:delete-profile' %}">Delete profile</a>
+</h5>
+<hr>
+
+{% if user.get_full_name or user.email %}
+    <h4>Profile details</h4><hr>
+    {% include 'profile_data.html' %}
+    <hr>
+{% endif %}
 
 {% include 'categories.html' %}
 {% endblock %}

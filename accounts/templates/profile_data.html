@@ -1,0 +1,7 @@
+{% if user.get_full_name %}
+    <div>Name: <mark>{{ user.get_full_name }}</mark></div>
+{% endif %}
+
+{% if user.email %}
+    <div>Email: <mark>{{ user.email }}</mark></div>
+{% endif %}

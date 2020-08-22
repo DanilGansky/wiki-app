@@ -1,47 +1,47 @@
 {% extends 'base.html' %}
+{% load filters %}
 
 {% block title %}{{ page.title }} | Pages{% endblock %}
 
 {% block content %}
 {% if page.background_image %}
-    <img class="page-background-image" width="600" src="{{ page.background_image.url }}" alt="{{ page.title }}">
+    <div class="page-background mb-2 h-25">
+        <img class="rounded w-100 h-100" src="{{ page.background_image.url }}" alt="{{ page.title }}">
+    </div>
 {% endif %}
 
-<h1>{{ page.title }} | My Knowledge Base</h1>
-<p class="page-description">{{ page.description }}</p>
+<h2>{{ page.title }}</h2>
+<p class="text-muted">{{ page.description }}</p>
 
 {% if page.author == user %}
-    <a href="{% url 'pages:delete-page' slug=page.slug %}">Delete this page</a>
-    <a href="{% url 'pages:update-page' slug=page.slug %}">Update this page</a>
+    <h5>
+        <a class="badge badge-primary" href="{% url 'pages:update-page' slug=page.slug %}">Update this page</a>
+        <a class="badge badge-danger" href="{% url 'pages:delete-page' slug=page.slug %}">Delete this page</a>
+    </h5>
 {% endif %}
 
-<div class="page-details">
-    <span class="page-author">{{ page.author.username }}</span>
-    <span class="page-is-shared">
-        {% if page.is_shared %}
-            Public
-        {% else %}
-            Private
-        {% endif %}
-    </span>
-
-    {% if page.author == user %}
-        <a href="{% url 'categories:category-detail' slug=page.category.slug %}">
-            {{ page.category.name }}
-        </a>
-    {% else %}
-        <span>{{ page.category.name }}</span>
-    {% endif %}
-</div>
+{% if page.author == user %}
+    <a class="badge badge-pill badge-primary" href="{% url 'categories:category-detail' slug=page.category.slug %}">
+        {{ page.category.name }}
+    </a>
+{% else %}
+    <span class="badge badge-pill badge-primary">{{ page.category.name }}</span>
+{% endif %}
+<hr>
 
 <p class="page-content">{{ page.content_markup_html | safe }}</p>
-
-<ul class="page-tags">
+<ul class="list-group list-group-horizontal my-3">
     {% for tag in page.tags %}
-        <li><a href="{% url 'search:tag-search' tag=tag %}">{{ tag }}</a></li>
+        <li class="list-group-item">
+            <a href="{% url 'search:tag-search' tag=tag %}">{{ tag }}</a>
+        </li>
     {% endfor %}
 </ul>
 
-<span class="page-date">{{ page.date_create }}</span>
-<span class="page-date">{{ page.date_update }}</span>
+<div class="page-details">
+    <span class="badge badge-pill badge-primary">{{ page.author.username }}</span>
+    <span class="badge badge-pill badge-secondary">{{ page.is_shared | prettify_shared_status }}</span>
+    <span class="badge badge-pill badge-secondary">Created: {{ page.date_create }}</span>
+    <span class="badge badge-pill badge-secondary">Updated: {{ page.date_update }}</span>
+</div>
 {% endblock %}

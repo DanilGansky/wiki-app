@@ -3,7 +3,11 @@
 {% block title %}Hub{% endblock %}
 
 {% block content %}
-<h1>Hub | My Knowledge Base</h1>
-<a href="{% url 'categories:create-category' %}">Create category</a>
+<h2>Hub</h2>
+<h5>
+    <a class="badge badge-primary" href="{% url 'categories:create-category' %}">Create category</a>
+</h5>
+<hr>
+
 {% include 'categories.html' %}
 {% endblock %}
