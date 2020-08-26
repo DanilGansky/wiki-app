@@ -37,7 +37,7 @@ function main {
             source ./venv/bin/activate
             export_keys
             run_postgresql
-	       	./manage.py runserver --settings=my_knowledge_base.settings.dev ;;
+	       	./manage.py runserver $2 --settings=my_knowledge_base.settings.dev ;;
 	    -prod) param="$2"
             echo "Starting in PRODUCTION mode on $param ..."
             setup_shell
@@ -45,7 +45,7 @@ function main {
             run_postgresql
             ./manage.py makemigrations
             ./manage.py migrate
-            ./manage.py runserver --settings=my_knowledge_base.settings.prod ;;
+            ./manage.py runserver $2 --settings=my_knowledge_base.settings.prod ;;
 	    *) echo "Not valid option" ;;
 	esac
     fi
