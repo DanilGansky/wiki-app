@@ -24,7 +24,7 @@
             </div>
         {% endif %}
 
-        <div class="col-lg">
+        <div class="{% if user.is_authenticated %}col-lg{% else %}col-lg-6 mx-auto{% endif %}">
             {% include 'messages.html' %}
             {% block content %}
             {% endblock %}
