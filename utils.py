@@ -1,5 +1,6 @@
 from io import BytesIO
 
+import markdown
 from django.core.files.images import ImageFile
 from django.db.models.fields.files import ImageFieldFile
 from PIL import Image
@@ -25,3 +26,13 @@ def compress_image(image: ImageFieldFile,
 
 def get_upload_path(instance, filename):
     return instance.get_upload_path(filename)
+
+
+def get_html_from_markdown(source):
+    return markdown.markdown(source,
+                             extensions=['pymdownx.tasklist',
+                                         'pymdownx.emoji',
+                                         'pymdownx.mark',
+                                         'pymdownx.smartsymbols',
+                                         'pymdownx.superfences',
+                                         'tables', 'footnotes'])

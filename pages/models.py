@@ -6,9 +6,8 @@ from django.db.models.functions import Lower
 from django.urls import reverse
 from django.utils.text import slugify
 from django.utils.translation import gettext as _
-from markdown import markdown
 
-from utils import compress_image, get_upload_path
+from utils import compress_image, get_html_from_markdown, get_upload_path
 
 
 class SharedPagesManager(models.Manager):
@@ -78,7 +77,7 @@ class Page(models.Model):
                 self._prev_background != self.background_image):
             self.background_image = compress_image(self.background_image)
 
-        self.content_markup_html = markdown(self.content_markup)
+        self.content_markup_html = get_html_from_markdown(self.content_markup)
         super(Page, self).save(*args, **kwargs)
         self._prev_background = self.background_image
         self._prev_title = self.title
