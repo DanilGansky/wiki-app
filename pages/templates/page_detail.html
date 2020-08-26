@@ -29,7 +29,7 @@
 {% endif %}
 <hr>
 
-<p class="page-content">{{ page.content_markup_html | safe }}</p>
+<div class="page-content">{{ page.content_markup_html | safe }}</div>
 <ul class="list-group list-group-horizontal my-3">
     {% for tag in page.tags %}
         <li class="list-group-item">
