@@ -28,3 +28,12 @@ ul.errorlist {
 .badge {
     margin-bottom: 5px;
 }
+
+.page-content .task-list-item {
+    list-style-type: none !important;
+}
+
+.page-content .task-list-item input[type="checkbox"] {
+    margin: 0 4px 0.25em -20px;
+    vertical-align: middle;
+}
