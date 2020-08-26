@@ -34,18 +34,3 @@
     <button class="btn btn-outline-primary" type="submit">Submit</button>
 </form>
 {% endblock %}
-
-{% block scripts %}
-<script src="{% static 'js/showdown.min.js' %}"></script>
-<script src="{% static 'js/html_preview.js' %}"></script>
-<script>
-    let markdown_field = document.querySelector('#id_content_markup');
-
-    if (markdown_field) {
-        let html_preview_field = document.createElement('div');
-        markdown_field.parentNode.insertBefore(html_preview_field,
-                                               markdown_field.nextSibling);
-        html_preview(markdown_field, html_preview_field);
-    }
-</script>
-{% endblock %}
