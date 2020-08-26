@@ -29,6 +29,19 @@ ul.errorlist {
     margin-bottom: 5px;
 }
 
+.page-content * {
+    max-width: 100%;
+}
+
+.page-content table,
+.page-content table tr,
+.page-content table td,
+.page-content table th {
+    border: 1px grey solid;
+    padding: 5px;
+    margin-bottom: 5px;
+}
+
 .page-content .task-list-item {
     list-style-type: none !important;
 }
