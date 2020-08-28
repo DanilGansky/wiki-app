@@ -44,6 +44,7 @@ function main {
             export_keys
             run_postgresql
             ./manage.py makemigrations
+            ./manage.py collectstatic
             ./manage.py migrate
             ./manage.py runserver $2 --settings=my_knowledge_base.settings.prod ;;
 	    *) echo "Not valid option" ;;
