@@ -14,7 +14,7 @@ A simple wiki app implemented in Python + Django
 $ chmod u+x ./start.sh
 ```
 
-4. Run script
+6. Run script
 
 ```bash
 $ ./start.sh -<mode> <url>
