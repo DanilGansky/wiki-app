@@ -1,4 +1,4 @@
-# My Knowledge Base
+# Wiki app
 
 A simple wiki app implemented in Python + Django
 
